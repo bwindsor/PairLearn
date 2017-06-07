@@ -11,7 +11,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node_modules/nodemon/bin/nodemon.js --inspect-brk=0.0.0.0:5858 bin/app.js"
+    "start": "node bin/app.js",
+    "nodemon": "node_modules/nodemon/bin/nodemon.js --inspect=0.0.0.0:5858 -L bin/app.js",
+    "nodemon-wait": "node_modules/nodemon/bin/nodemon.js --inspect-brk=0.0.0.0:5858 -L bin/app.js"
   },
   "author": "",
   "license": "ISC",
