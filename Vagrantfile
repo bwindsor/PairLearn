@@ -5,10 +5,15 @@ Vagrant.configure("2") do |config|
   # config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # This only allows local access to the host
+  # This port is for the web server
   config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+  # This port is for node debugging
   config.vm.network "forwarded_port", guest: 5858, host: 5858, host_ip: "127.0.0.1"
+  # These ports are for couchdb
   config.vm.network "forwarded_port", guest: 5984, host: 5984, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 5986, host: 5986, host_ip: "127.0.0.1"
+  # This port is for livereload
+  config.vm.network "forwarded_port", guest: 35729, host: 35729, host_ip: "127.0.0.1"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

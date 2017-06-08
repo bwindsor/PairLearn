@@ -1,24 +1,31 @@
 {
-  "name": "code",
+  "name": "pairlearn",
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "app": "./bin/pairlearn.js"
+    "pairlearn": "./bin/pairlearn.js"
   },
   "main": "bin/pairlearn.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
+    "prestart": "",
     "start": "node bin/pairlearn.js",
-    "nodemon": "node_modules/nodemon/bin/nodemon.js --inspect=0.0.0.0:5858 -L bin/pairlearn.js",
-    "nodemon-wait": "node_modules/nodemon/bin/nodemon.js --inspect-brk=0.0.0.0:5858 -L bin/pairlearn.js"
+    "start-dev": "nodemon -L --watch src --ext js,ts,json,env --exec \"bash -c\" \"npm run build && node --inspect=0.0.0.0:5858 bin/pairlearn.js\"",
+    "inspect-brk": "nodemon --inspect-brk=0.0.0.0:5858 -L bin/pairlearn.js",
+    "build": "tsc"
   },
-  "author": "",
+  "author": "Ben Windsor",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "@types/express": "^4.0.35",
+    "@types/grunt": "^0.4.21",
+    "@types/node": "^7.0.29",
+    "mocha": "^3.4.2",
+    "nodemon": "^1.11.0",
+    "typescript": "^2.3.4"
   },
   "dependencies": {
     "body-parser": "^1.17.2",

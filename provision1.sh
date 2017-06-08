@@ -23,3 +23,4 @@ sed -i "/\[chttpd\]/abind_address = 0.0.0.0" /home/couchdb/couchdb/etc/local.ini
 sed -i -e 's/writer = stderr/writer = file/g' /home/couchdb/couchdb/etc/default.ini
 echo "[log]" >> /home/couchdb/couchdb/etc/local.ini
 echo "file = /home/couchdb/couchdb/couchdb.log" >> /home/couchdb/couchdb/etc/local.ini
+npm install -g livereload

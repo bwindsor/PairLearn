@@ -1,6 +1,4 @@
-"use strict";
-
-const express = require("express");
+import * as express from "express";
 const user = require("../routes/user.js");
 const index = require("../routes/index.js");
 const bodyParser = require('body-parser');

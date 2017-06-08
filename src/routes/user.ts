@@ -1,4 +1,4 @@
-const express = require("express");
+import * as express from "express";
 const router = express.Router();
 const dbwrapper = require("../database/dbwrapper.js");
 /*
@@ -26,5 +26,4 @@ router.put('/:username', (req, res, next) => {
 
 });
 
-
-exports.default = router;
+export default router;

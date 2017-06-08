@@ -6,7 +6,7 @@ To get the code running for debugging:
 * `vagrant up`
 * `vagrant ssh`
 * `cd code`
-* `npm run nodemon` (for debugging)
+* `npm run start-dev` (for debugging)
 * OR `npm start` (for running)
 
 You can now attach on `localhost:5858` to debug the code.
@@ -16,8 +16,12 @@ Editing the code can be done in your favourite editor.
 
 ## Debugging the code
 Debugging the code is easiest in Google Chrome:
-* Go to chrome://inspect/#devices
+### Nodejs code
+* Go to [chrome://inspect/#devices]
 * Make sure `Discover network targets` is ticked, and click Configure to add `localhost:5858` as a target
 * Click `Open dedicated DevTools for Node`
+### Viewing the page
+* Download the livereload Chrome extension from [http://livereload.com/extensions/]
+* Livereload is already running on the vagrant machine - navigate to localhost:8080 and click the livereload icon to enable livereload for the page. Then the page should refresh whenever you modify the backend.
 
 Now whenever you make a change to any of the files, `nodemon` will restart the server, and after a few seconds Chrome developer tools will automatically reconnect to the process.
