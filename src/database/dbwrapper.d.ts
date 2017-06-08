@@ -4,7 +4,7 @@ declare namespace dbwrapper {
         password: string;
         roles: Array<string>;
         type: string;
-        _rev: string;
+        _rev?: string;
     }
     export interface Iresponse {
         ok: string;

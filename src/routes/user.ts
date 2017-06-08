@@ -1,6 +1,6 @@
 import * as express from "express";
 const router = express.Router();
-const dbwrapper = require("../database/dbwrapper.js");
+import * as dbwrapper from "../database/dbwrapper"
 /*
 router.get('/', (req, res) => {
     res.status(200);
@@ -25,5 +25,16 @@ router.put('/:username', (req, res, next) => {
     }
 
 });
+// Delete a user
+router.delete('/:username', (req, res, next) => {
+    let username : string = req.params.username;
+    dbwrapper.deleteuser(username, err => {
+        if (err) {
+            next(err)
+        } else {
+            res.status(200).json(null);
+        }
+    })
+})
 
 export default router;

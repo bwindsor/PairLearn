@@ -25,3 +25,5 @@ Debugging the code is easiest in Google Chrome:
 * Livereload is already running on the vagrant machine - navigate to localhost:8080 and click the livereload icon to enable livereload for the page. Then the page should refresh whenever you modify the backend.
 
 Now whenever you make a change to any of the files, `nodemon` will restart the server, and after a few seconds Chrome developer tools will automatically reconnect to the process.
+### CouchDB admin interface
+You can view the database through a Ui at `localhost:5984/_utils`. Log in with the username and password which are specified in the Vagrantfile (currently couchadmin and couch-admin-123).

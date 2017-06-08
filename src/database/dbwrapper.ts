@@ -7,7 +7,15 @@ import * as http from "http";
 let add_user : dbwrapper.add_user = (username, password, done, existing_user) => {
 
     // An object of options to indicate where to post to
-    var post_data : dbwrapper.Iuser_post_data;
+    let post_data : dbwrapper.Iuser_post_data = {
+        name: username,
+        password: password,
+        roles: [],
+        type: 'user'
+    };
+    if (existing_user) {
+        post_data._rev = existing_user._rev;
+    }
     post_data.name = username;
     post_data.password = password;
     post_data.roles = [];
@@ -51,6 +59,24 @@ let add_user : dbwrapper.add_user = (username, password, done, existing_user) =>
 }
 
 function get_user(username, done) {
+    basic_method_on_user('GET', username, done);
+}
+
+function adduser(username:string, password:string, done) {
+    get_user(username, (user_object, err) => {
+        if (err) {
+            add_user(username, password, done, null);
+        } else {
+            add_user(username, password, done, user_object)
+        }
+    })
+}
+
+function deleteuser(username:string, done) {
+    basic_method_on_user('DELETE', username, done);
+}
+
+function basic_method_on_user(method_name: string, username:string, done) {
 // An object of options to indicate where to post to
     var base64encodedData = new Buffer(db_username + ':' + db_password).toString('base64');
 
@@ -58,7 +84,7 @@ function get_user(username, done) {
         host: db_host,
         port: db_port,
         path: '/_users/org.couchdb.user:' + username,
-        method: 'GET',
+        method: method_name,
         headers: {
             'Authorization': 'Basic ' + base64encodedData,
             'Accept': 'application/json',
@@ -66,8 +92,8 @@ function get_user(username, done) {
         }
     };
 
-      // Set up the request
-    var post_req = http.get(get_options, function(res) {
+    // Set up the request
+    var post_req = http.request(get_options, function(res) {
         var body = ''
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
@@ -82,16 +108,7 @@ function get_user(username, done) {
             }
         })  
     });
+    post_req.end();
 }
 
-function adduser(username:string, password:string, done) {
-    get_user(username, (user_object, err) => {
-        if (err) {
-            add_user(username, password, done, null);
-        } else {
-            add_user(username, password, done, user_object)
-        }
-    })
-}
-
-export {adduser};
+export {adduser, deleteuser};
