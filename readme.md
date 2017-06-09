@@ -1,3 +1,6 @@
+This is the backend for [PairLearnApp](https://github.com/bwindsor/PairLearnApp).
+Currently very incomplete, so far this has mostly been teaching me how to set up development infrastructure (vagrant, chrome debugger, live reload, npm, nodemon, couchdb)
+
 # Getting started
 ## Development VM
 The host machine will need vagrant to be installed.
