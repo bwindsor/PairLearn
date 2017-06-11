@@ -4,7 +4,7 @@ const db_username = process.env.DB_USER;
 const db_password = process.env.DB_PASS;
 import * as http from "http";
 
-let add_user : dbwrapper.add_user = (username, password, done, existing_user) => {
+let add_or_update_user : dbwrapper.add_or_update_user = (username, password, done, existing_user) => {
 
     // An object of options to indicate where to post to
     let post_data : dbwrapper.Iuser_post_data = {
@@ -56,17 +56,27 @@ function get_user(username, done) {
 }
 
 function adduser(username:string, password:string, done) {
-    get_user(username, (user_object, err) => {
+    add_or_update_user(username, password, done, null);
+}
+
+function updateuser(username: string, newPassword:string, done) {
+    get_user(username, (err, user_object) => {
         if (err) {
-            add_user(username, password, done, null);
+            done(err);
         } else {
-            add_user(username, password, done, user_object)
+            add_or_update_user(username, newPassword, done, user_object)
         }
     })
 }
 
 function deleteuser(username:string, done) {
-    basic_method_on_user('DELETE', username, done);
+    get_user(username, (err, user_object) => {
+        if (err) {
+            done(err);
+        } else {
+            basic_method_on_user('DELETE', username + "?rev=" + user_object._rev, done);
+        }
+    });
 }
 
 function basic_method_on_user(method_name: string, username:string, done) {
@@ -104,4 +114,4 @@ function basic_method_on_user(method_name: string, username:string, done) {
     post_req.end();
 }
 
-export {adduser, deleteuser};
+export {adduser, updateuser, deleteuser};

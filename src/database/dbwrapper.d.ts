@@ -14,7 +14,7 @@ declare namespace dbwrapper {
         _rev: string;
     }
 
-    export type add_user = (
+    export type add_or_update_user = (
         username: string,
         password:string,
         done,
