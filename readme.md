@@ -30,3 +30,11 @@ Debugging the code is easiest in Google Chrome:
 Now whenever you make a change to any of the files, `nodemon` will restart the server, and after a few seconds Chrome developer tools will automatically reconnect to the process.
 ### CouchDB admin interface
 You can view the database through a Ui at `localhost:5984/_utils`. Log in with the username and password which are specified in the Vagrantfile (currently couchadmin and couch-admin-123).
+
+# API
+There are a few API routes implemented here which require admin access to the database (namely creating and removing users). After this, users can query their database directly using the couchDB API. These are on the port which Express is listening on.
+`POST /:username` adds a user
+`PUT /:username` allows a password to be updated
+`DELETE /:username` deletes a user
+Thereafter operations can be called using the CouchDB API on the database. These are on the port which CouchDB is listening on.
+`GET /dbname` gets information about the user's database. These requests need simple authentication. HTTP is currently used so passwords are sent unencrypted though.
