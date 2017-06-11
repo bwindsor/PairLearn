@@ -8,7 +8,8 @@ router.get('/', (req, res) => {
     res.send("Hello World!\n");
 });
 */
-// Create a user
+// Create a user (no permissions required)
+// A user can update themselves directly once authenticated directly with CouchDB
 router.post('/:username', (req, res, next) => {
     var username = req.params.username;
     var password = req.body.password;
@@ -25,23 +26,9 @@ router.post('/:username', (req, res, next) => {
     }
 
 });
-// Update a user
-router.put('/:username', (req, res, next) => {
-    var username = req.params.username;
-    var password = req.body.password;
-    if (username && password) {
-        dbwrapper.updateuser(username, password, err => {
-            if (err) {
-                next(err);
-            } else {
-                res.status(200).json(null);
-            }
-        });
-    } else {
-        next({"error": true, "reason": "Must supply a username and password"})
-    }
-});
-// Delete a user
+// Delete a user - a user can also do this directly, but we need to delete the database too,
+// so we pass the request on to CouchDB. If successful, we also delete the user's database
+// which requires admin rights.
 router.delete('/:username', (req, res, next) => {
     let username : string = req.params.username;
     dbwrapper.deleteuser(username, err => {
