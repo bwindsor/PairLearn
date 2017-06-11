@@ -4,6 +4,30 @@ const db_username = process.env.DB_USER;
 const db_password = process.env.DB_PASS;
 import * as http from "http";
 
+function adduser(username:string, password:string, done) {
+    add_or_update_user(username, password, done, null);
+}
+
+function updateuser(username: string, newPassword:string, done) {
+    get_user(username, (err, user_object) => {
+        if (err) {
+            done(err);
+        } else {
+            add_or_update_user(username, newPassword, done, user_object)
+        }
+    })
+}
+
+function deleteuser(username:string, done) {
+    get_user(username, (err, user_object) => {
+        if (err) {
+            done(err);
+        } else {
+            basic_method_on_user('DELETE', username + "?rev=" + user_object._rev, done);
+        }
+    });
+}
+
 let add_or_update_user : dbwrapper.add_or_update_user = (username, password, done, existing_user) => {
 
     // An object of options to indicate where to post to
@@ -53,30 +77,6 @@ let add_or_update_user : dbwrapper.add_or_update_user = (username, password, don
 
 function get_user(username, done) {
     basic_method_on_user('GET', username, done);
-}
-
-function adduser(username:string, password:string, done) {
-    add_or_update_user(username, password, done, null);
-}
-
-function updateuser(username: string, newPassword:string, done) {
-    get_user(username, (err, user_object) => {
-        if (err) {
-            done(err);
-        } else {
-            add_or_update_user(username, newPassword, done, user_object)
-        }
-    })
-}
-
-function deleteuser(username:string, done) {
-    get_user(username, (err, user_object) => {
-        if (err) {
-            done(err);
-        } else {
-            basic_method_on_user('DELETE', username + "?rev=" + user_object._rev, done);
-        }
-    });
 }
 
 function basic_method_on_user(method_name: string, username:string, done) {
