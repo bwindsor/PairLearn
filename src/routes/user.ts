@@ -8,8 +8,8 @@ router.get('/', (req, res) => {
     res.send("Hello World!\n");
 });
 */
-// Create or update a user
-router.put('/:username', (req, res, next) => {
+// Create a user
+router.post('/:username', (req, res, next) => {
     var username = req.params.username;
     var password = req.body.password;
     if (username && password) {
@@ -24,6 +24,22 @@ router.put('/:username', (req, res, next) => {
         next({"error": true, "reason": "Must supply a username and password"})
     }
 
+});
+// Update a user
+router.put('/:username', (req, res, next) => {
+    var username = req.params.username;
+    var password = req.body.password;
+    if (username && password) {
+        dbwrapper.updateuser(username, password, err => {
+            if (err) {
+                next(err);
+            } else {
+                res.status(200).json(null);
+            }
+        });
+    } else {
+        next({"error": true, "reason": "Must supply a username and password"})
+    }
 });
 // Delete a user
 router.delete('/:username', (req, res, next) => {
