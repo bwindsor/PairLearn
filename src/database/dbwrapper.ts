@@ -16,13 +16,6 @@ let add_user : dbwrapper.add_user = (username, password, done, existing_user) =>
     if (existing_user) {
         post_data._rev = existing_user._rev;
     }
-    post_data.name = username;
-    post_data.password = password;
-    post_data.roles = [];
-    post_data.type = 'user';
-    if (existing_user) {
-        post_data._rev = existing_user._rev;
-    }
     var base64encodedData = new Buffer(db_username + ':' + db_password).toString('base64');
 
     var post_options : http.RequestOptions;
@@ -102,9 +95,9 @@ function basic_method_on_user(method_name: string, username:string, done) {
         res.on('end', function () {
             var response : dbwrapper.Iresponse = JSON.parse(body);
             if (response.error) {
-                done(null, response);
-            } else {
                 done(response);
+            } else {
+                done(null, response);
             }
         })  
     });
